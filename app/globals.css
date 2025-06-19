@@ -4,7 +4,13 @@
   --background: #ffffff;
   --foreground: #171717;
 }
-
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
