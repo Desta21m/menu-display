@@ -4,36 +4,54 @@ export type Restaurant = {
   name: string;
   description?: string;
   logoUrl: string;
-  subDomin: string;
+  subDomain: string;
   primaryColor: string;
   secondaryColor: string;
   accentColor: string;
   active: boolean;
   contacts?: Contact;
-  meanu: FoodMenu;
+  menu: FoodMenu;
 };
 
 export interface Contact {
   id?: number;
-  facebookpageUrl?: string;
-  tiktak?: string;
-  instgram?: string;
+  phoneNumber?: string;
+  email?: string;
+  location?: {
+    label: string;
+    link: string;
+  };
+  facebook?: string;
+  instagram?: string;
+  youtube?: string;
+  tiktok?: string;
   telegram?: string;
   whatsUp?: string;
-  youtube?: string;
-  webpageUrl?: string;
-  phoneNumner?: string;
-  emale?: string;
+  website?: string;
+  linkedin?: string;
+  x?: string;
+  snapchat?: string;
+  discord?: string;
 }
+
 
 export type FoodMenu = {
   baseCategories: Category[];
-  supportedLanguages : Language[];
+  supportedLanguages: Language[];
+  supportedCurrencies: Currency[];
 };
+
 export interface Language {
   id?: number;
   code: string;
   name: string;
+}
+
+export interface Currency {
+  id?: number;
+  code: string;
+  name: string;
+  symbol: string;
 }
 
 export type Category = {
@@ -41,14 +59,15 @@ export type Category = {
   translations: Translation[];
   foods: Food[];
   children?: Category[];
-  discount?: Discount
-  imageUrl:string
+  discount?: Discount;
+  imageUrl: string;
 };
 
 export type Food = {
   id: number;
   translations: Translation[];
-  price: number;
+  price: number; // TO DO: need to delete this field
+  exchanges?: Exchange[];
   imageUrl: string;
   discount?: Discount;
 };
@@ -58,6 +77,11 @@ export type Translation = {
   fieldName: string;
   translatedText: string;
 };
+
+export interface Exchange {
+  symbol: string;
+  price: number;
+}
 
 export type Discount = {
   type: 'CATEGORY_LEVEL' | 'PRODUCT_LEVEL';

@@ -1,9 +1,9 @@
-import { FoodMenu,Food, Language } from '@/lib/types';
+import { FoodMenu, Food } from '@/lib/types';
 import { getTranslation } from '@/lib/utils';
 
-export default function MenuDisplay({ 
+export default function MenuDisplay({
   menu,
-  language = 'en'
+  language = 'en',
 }: {
   menu: FoodMenu;
   language?: string;
@@ -15,12 +15,12 @@ export default function MenuDisplay({
           <h2 className="text-2xl font-bold mb-4" style={{ color: 'var(--primary)' }}>
             {getTranslation(category.translations, language, 'name')}
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {category.foods.map(food => (
-              <FoodCard 
-                key={food.id} 
-                food={food} 
+              <FoodCard
+                key={food.id}
+                food={food}
                 language={language}
               />
             ))}
@@ -34,8 +34,8 @@ export default function MenuDisplay({
 function FoodCard({ food, language }: { food: Food; language: string }) {
   return (
     <div className="border rounded-lg overflow-hidden">
-      <img 
-        src={food.imageUrl} 
+      <img
+        src={food.imageUrl}
         alt={getTranslation(food.translations, language, 'name')}
         className="w-full h-48 object-cover"
       />

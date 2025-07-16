@@ -1,27 +1,41 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { useState } from 'react';
 import LanguageSwitcher from '@/components/MenuDisplay/LanguageSwitcher';
+import CurrencyExchange from '@/components/MenuDisplay/CurrencyExchange';
 import MenuCategories from '@/components/MenuDisplay/MenuCategories';
-import { Restaurant, Translation, Contact, Language, Category, Food, Discount } from '@/lib/types';
+import { Restaurant, Translation, Exchange } from '@/lib/types';
+import Footer from '@/components/UI/Footer';
 
-const mockRestaurant: Restaurant = {
+const mockRestaurant: Restaurant = {  
   id: 1,
   name: "Delicious Bites",
   description: "The finest dining experience in town",
   logoUrl: "https://png.pngtree.com/template/20200704/ourmid/pngtree-restaurant-logo-design-vector-template-image_388753.jpg",
-  subDomin: "delicious",
+  subDomain: "delicious",
   primaryColor: "#4F46E5",
   secondaryColor: "#1E293B",
   accentColor: "#F59E0B",
   active: true,
   contacts: {
-    facebookpageUrl: "https://facebook.com/deliciousbites",
-    instgram: "https://instagram.com/deliciousbites",
-    whatsUp: "+1234567890",
-    phoneNumner: "+1234567890",
-    emale: "info@deliciousbites.com",
-    webpageUrl: "https://deliciousbites.com"
+    phoneNumber: "+1234567890",
+    email: "info@deliciousbites.com",
+    location: {
+      label: "Addis Ababa, Ethiopia",
+      link: "https://maps.app.goo.gl/jnpY3mccFqkHVfZT6"
+    },
+    website: "https://deliciousbites.com",
+    facebook: "https://facebook.com/deliciousbites",
+    instagram: "https://instagram.com/deliciousbites",
+    youtube: "https://youtube.com/deliciousbites",
+    tiktok: "https://tiktok.com/@deliciousbites",
+    telegram: "https://t.me/deliciousbites",
+    whatsUp: "https://wa.me/1234567890",
+    linkedin: "https://linkedin.com/company/deliciousbites",
+    x: "https://x.com/deliciousbites",
+    snapchat: "https://snapchat.com/add/deliciousbites",
+    discord: "https://discord.gg/deliciousbites",
   },
   menu: {
     supportedLanguages: [
@@ -29,9 +43,15 @@ const mockRestaurant: Restaurant = {
       { code: "ar", name: "العربية" },
       { code: "fr", name: "Français" }
     ],
+    supportedCurrencies: [
+      { code: "ETB", name: "ET Birr", symbol: "ETB" },
+      { code: "USD", name: "US Dollar", symbol: "$" },
+      { code: "EUR", name: "Euro", symbol: "€" },
+      { code: "GBP", name: "British Pound", symbol: "£" }
+    ],
     baseCategories: [
       {
-        id: 1,
+        id: 1001, // Categories in 1000s
         imageUrl: "https://via.placeholder.com/400x200?text=Appetizers",
         translations: [
           { languageCode: "en", fieldName: "name", translatedText: "Appetizers" },
@@ -41,82 +61,95 @@ const mockRestaurant: Restaurant = {
         foods: [],
         children: [
           {
-            id: 3,
+            id: 2001, // Subcategories in 2000s
             imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
             translations: [
-              { languageCode: "en", fieldName: "name", translatedText: "apple" }
+              { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
             ],
             foods: [
               {
-                id: 301,
+                id: 3001, // Foods in 3000s
                 imageUrl: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
                 price: 7.99,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
+                ],
                 translations: [
-                  { 
-                    languageCode: "en", 
-                    fieldName: "name", 
-                    translatedText: "Bruschetta" 
-                  },
-                  { 
-                    languageCode: "en", 
-                    fieldName: "description", 
-                    translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                  },
+                  { languageCode: "en", fieldName: "name", translatedText: "Bruschetta New" },
+                  { languageCode: "ar", fieldName: "name", translatedText: "المقبلات" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" },
+                  { languageCode: "ar", fieldName: "description", translatedText: "المقبلاتالمقبلاتالمقبلاتا لمقبلاتلمقبلاتا لمقبلاتالمقبلاتالمقبلاتلمقبلاتالمقبل اتالمقبلاتالمقبلاتلمقبلاتالمق بلاتالمقبلاتالمقبلاتلمقبلات المقبلاتالمقبلاتالمقبلاتلمقبلاتالمق بلاتالمقبلاتالمقبلاتلمقبلاتالمقبلاتا لمقبلاتالمقبلاتلمقبلاتالمقبلاتالمقبلاتالمقبلاتلمقبلاتالم قبلاتالمقبلاتالمقبلاتلمقبلاتالمقبل اتالمقبلاتالمقبلاتلمقبلاتالمقبل اتالمقبلاتالمقبلاتلمقبلاتالمق بلاتالمقبلاتالمقبلاتلمقبلاتال مقبلاتالمقبلاتالمقبلاتلمقبلاتا لمقبلاتالمقبلاتالمقبلاتلمقبلاتا لمقبلاتالمقبلاتالمقبلاتلمقبلاتا لمقبلاتالمقبلاتالمقبلاتلمقبلاتالمقبلاتالمقبلاتالمقبلات" }
                 ],
                 discount: {
                   type: "PRODUCT_LEVEL",
                   percentage: 10,
-                  startDate: "2023-01-01",
-                  endDate: "2023-12-31"
+                  startDate: "2025-01-01",
+                  endDate: "2025-07-07"
                 }
               },
               {
-                id: 302,
+                id: 3002,
                 imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0EbtAMkvjstpwiT8oSwwiPDJXVpC_KAaHdw&s",
                 price: 7.99,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
+                ],
                 translations: [
-                  { 
-                    languageCode: "en", 
-                    fieldName: "name", 
-                    translatedText: "Bruschetta" 
-                  },
-                  { 
-                    languageCode: "en", 
-                    fieldName: "description", 
-                    translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                  },
+                  { languageCode: "en", fieldName: "name", translatedText: "Bruschetta" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" }
                 ],
                 discount: {
                   type: "PRODUCT_LEVEL",
                   percentage: 10,
-                  startDate: "2023-01-01",
-                  endDate: "2023-12-31"
+                  startDate: "2025-08-01",
+                  endDate: "2025-12-31"
                 }
               },
+              {
+                id: 3004,
+                imageUrl: "",
+                price: 7.99,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
+                ],
+                translations: [
+                  { languageCode: "en", fieldName: "name", translatedText: "Bruschetta" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" }
+                ],
+                discount: {
+                  type: "PRODUCT_LEVEL",
+                  percentage: 10,
+                  startDate: "2025-08-01",
+                  endDate: "2025-12-31"
+                }
+              }
             ]
           },
           {
-            id: 4,
+            id: 2002,
             imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
             translations: [
-              { languageCode: "en", fieldName: "name", translatedText: "apple" }
+              { languageCode: "en", fieldName: "name", translatedText: "Seasonal Appetizers" }
             ],
             foods: [
               {
-                id: 401,
-                imageUrl: "data:image/jpeg;base64,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",
-                price: 7.99,
+                id: 3003,
+                imageUrl: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+                price: 7,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
+                ],
                 translations: [
-                  { 
-                    languageCode: "en", 
-                    fieldName: "name", 
-                    translatedText: "Bruschetta" 
-                  },
-                  { 
-                    languageCode: "en", 
-                    fieldName: "description", 
-                    translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                  },
+                  { languageCode: "en", fieldName: "name", translatedText: "Seasonal Bruschetta" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Toasted bread with seasonal toppings" }
                 ],
                 discount: {
                   type: "PRODUCT_LEVEL",
@@ -124,527 +157,126 @@ const mockRestaurant: Restaurant = {
                   startDate: "2023-01-01",
                   endDate: "2023-12-31"
                 }
-              },
-              {
-                id: 402,
-                imageUrl: "data:image/jpeg;base64,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",
-                price: 7.99,
-                translations: [
-                  { 
-                    languageCode: "en", 
-                    fieldName: "name", 
-                    translatedText: "Bruschetta" 
-                  },
-                  { 
-                    languageCode: "en", 
-                    fieldName: "description", 
-                    translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                  },
-                ],
-                discount: {
-                  type: "PRODUCT_LEVEL",
-                  percentage: 10,
-                  startDate: "2023-01-01",
-                  endDate: "2023-12-31"
-                }
-              },
+              }
             ]
           }
         ]
       },
       {
-        id: 2,
-        imageUrl: "https://via.placeholder.com/400x200?text=Appetizers",
+        id: 1002,
+        imageUrl: "https://via.placeholder.com/400x200?text=Fast+Food",
         translations: [
-          { languageCode: "en", fieldName: "name", translatedText: "fast food" },
-          { languageCode: "ar", fieldName: "name", translatedText: "المقبلات" },
-          { languageCode: "fr", fieldName: "name", translatedText: "Entrées" }
+          { languageCode: "en", fieldName: "name", translatedText: "Fast Food" },
+          { languageCode: "ar", fieldName: "name", translatedText: "الوجبات السريعة" },
+          { languageCode: "fr", fieldName: "name", translatedText: "Fast Food" }
         ],
         foods: [],
         children: [
           {
-            id: 5,
-            imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
+            id: 2003,
+            imageUrl: "https://via.placeholder.com/400x200?text=Burgers",
             translations: [
-              { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
+              { languageCode: "en", fieldName: "name", translatedText: "Burgers" }
             ],
             foods: [
-            ],
-            children: [
-                {
-                  id: 8,
-                  imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                  translations: [
-                    { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
-                  ],
-                  foods: [
-                    {
-                      id: 801,
-                      imageUrl: "https://thumbs.dreamstime.com/b/bargar-food-looks-like-you-re-asking-could-clarify-what-mean-referring-to-bargarh-district-india-burger-366711135.jpg?w=992",
-                      price: 7.99,
-                      translations: [
-                        { 
-                          languageCode: "en", 
-                          fieldName: "name", 
-                          translatedText: "Bruschetta" 
-                        },
-                        { 
-                          languageCode: "en", 
-                          fieldName: "description", 
-                          translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                        },
-                      ],
-                      discount: {
-                        type: "PRODUCT_LEVEL",
-                        percentage: 10,
-                        startDate: "2023-01-01",
-                        endDate: "2023-12-31"
-                      }
-                    },
-                    {
-                      id: 802,
-                      imageUrl: "https://images.unsplash.com/photo-1551024601-bec78aea704b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVzc2VydHxlbnwwfHwwfHx8MA%3D%3D",
-                      price: 7.99,
-                      translations: [
-                        { 
-                          languageCode: "en", 
-                          fieldName: "name", 
-                          translatedText: "Bruschetta" 
-                        },
-                        { 
-                          languageCode: "en", 
-                          fieldName: "description", 
-                          translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                        },
-                      ],
-                      discount: {
-                        type: "PRODUCT_LEVEL",
-                        percentage: 10,
-                        startDate: "2023-01-01",
-                        endDate: "2023-12-31"
-                      }
-                    },
-                  ]
-                },
-                {
-                  id: 9,
-                  imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                  translations: [
-                    { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
-                  ],
-                  foods: [
-                    {
-                      id: 901,
-                      imageUrl: "https://c.ndtvimg.com/2021-01/78btgdc_pizza_625x300_15_January_21.jpg",
-                      price: 7.99,
-                      translations: [
-                        { 
-                          languageCode: "en", 
-                          fieldName: "name", 
-                          translatedText: "Bruschetta" 
-                        },
-                        { 
-                          languageCode: "en", 
-                          fieldName: "description", 
-                          translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                        },
-                      ],
-                      discount: {
-                        type: "PRODUCT_LEVEL",
-                        percentage: 10,
-                        startDate: "2023-01-01",
-                        endDate: "2023-12-31"
-                      }
-                    },
-                    {
-                      id: 902,
-                      imageUrl: "https://miro.medium.com/v2/resize:fit:1400/0*oTfm1pTXLxitHHFy.jpg",
-                      price: 7.99,
-                      translations: [
-                        { 
-                          languageCode: "en", 
-                          fieldName: "name", 
-                          translatedText: "Bruschetta" 
-                        },
-                        { 
-                          languageCode: "en", 
-                          fieldName: "description", 
-                          translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                        },
-                      ],
-                      discount: {
-                        type: "PRODUCT_LEVEL",
-                        percentage: 10,
-                        startDate: "2023-01-01",
-                        endDate: "2023-12-31"
-                      }
-                    },
-                  ]
-                },
-                {
-                  id: 10,
-                  imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                  translations: [
-                    { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
-                  ],
-                  foods: [
-                    {
-                      id: 1001,
-                      imageUrl: "https://www.thespruceeats.com/thmb/cQD_JvUOD_OzgrQkF0cUiqobkyE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/vegetarian-bean-and-rice-burrito-recipe-3378550-9_preview-5b2417e1ff1b780037a58cda.jpeg",
-                      price: 7.99,
-                      translations: [
-                        { 
-                          languageCode: "en", 
-                          fieldName: "name", 
-                          translatedText: "Bruschetta" 
-                        },
-                        { 
-                          languageCode: "en", 
-                          fieldName: "description", 
-                          translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                        },
-                      ],
-                      discount: {
-                        type: "PRODUCT_LEVEL",
-                        percentage: 10,
-                        startDate: "2023-01-01",
-                        endDate: "2023-12-31"
-                      }
-                    },
-                    {
-                      id: 1002,
-                      imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                      price: 7.99,
-                      translations: [
-                        { 
-                          languageCode: "en", 
-                          fieldName: "name", 
-                          translatedText: "Bruschetta" 
-                        },
-                        { 
-                          languageCode: "en", 
-                          fieldName: "description", 
-                          translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                        },
-                      ],
-                      discount: {
-                        type: "PRODUCT_LEVEL",
-                        percentage: 10,
-                        startDate: "2023-01-01",
-                        endDate: "2023-12-31"
-                      }
-                    },
-                  ]
+              {
+                id: 3010,
+                imageUrl: "https://thumbs.dreamstime.com/b/bargar-food-looks-like-you-re-asking-could-clarify-what-mean-referring-to-bargarh-district-india-burger-366711135.jpg?w=992",
+                price: 9.99,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
+                ],
+                translations: [
+                  { languageCode: "en", fieldName: "name", translatedText: "Classic Burger" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Juicy beef patty with fresh veggies" }
+                ],
+                discount: {
+                  type: "PRODUCT_LEVEL",
+                  percentage: 10,
+                  startDate: "2023-01-01",
+                  endDate: "2023-12-31"
                 }
-            ]
-          },
-          {
-            id: 6,
-            imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-            translations: [
-              { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
-            ],
-            foods: [
-            ],
-            children: [
-              {
-                id: 11,
-                imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                translations: [
-                  { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
-                ],
-                foods: [
-                  {
-                    id: 1101,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                  {
-                    id: 1102,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                ]
-              },
-              {
-                id: 12,
-                imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                translations: [
-                  { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
-                ],
-                foods: [
-                  {
-                    id: 1201,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                  {
-                    id: 1202,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                ]
-              },
-              {
-                id: 13,
-                imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                translations: [
-                  { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
-                ],
-                foods: [
-                ]
               }
             ]
           },
           {
-            id: 7,
-            imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
+            id: 2004,
+            imageUrl: "https://via.placeholder.com/400x200?text=Pizzas",
             translations: [
-              { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
+              { languageCode: "en", fieldName: "name", translatedText: "Pizzas" }
             ],
             foods: [
-            ],
-            children: [
               {
-                id: 14,
-                imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                translations: [
-                  { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
+                id: 3005,
+                imageUrl: "https://c.ndtvimg.com/2021-01/78btgdc_pizza_625x300_15_January_21.jpg",
+                price: 12.99,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
                 ],
-                foods: [
-                  {
-                    id: 1401,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                  {
-                    id: 1402,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                ]
+                translations: [
+                  { languageCode: "en", fieldName: "name", translatedText: "Margherita Pizza" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Classic tomato and mozzarella" }
+                ],
+                discount: {
+                  type: "PRODUCT_LEVEL",
+                  percentage: 15,
+                  startDate: "2025-06-01",
+                  endDate: "2025-12-31"
+                }
               },
               {
-                id: 15,
-                imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                translations: [
-                  { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
+                id: 3006,
+                imageUrl: "https://c.ndtvimg.com/2021-01/78btgdc_pizza_625x300_15_January_21.jpg",
+                price: 12.99,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
                 ],
-                foods: [
-                  {
-                    id: 1501,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                  {
-                    id: 1502,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                ]
+                translations: [
+                  { languageCode: "en", fieldName: "name", translatedText: "Margherita Pizza" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Classic tomato and mozzarella" }
+                ],
+                discount: {
+                  type: "PRODUCT_LEVEL",
+                  percentage: 15,
+                  startDate: "2025-06-01",
+                  endDate: "2025-12-31"
+                }
               },
               {
-                id: 16,
-                imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
-                translations: [
-                  { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
+                id: 3007,
+                imageUrl: "https://c.ndtvimg.com/2021-01/78btgdc_pizza_625x300_15_January_21.jpg",
+                price: 12.99,
+                exchanges: [ 
+                  { symbol: "ETB", price: 400 },
+                  { symbol: "USD", price: 8.00 },
+                  { symbol: "EUR", price: 7.00 }
                 ],
-                foods: [
-                  {
-                    id: 1601,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                  {
-                    id: 1602,
-                    imageUrl: "https://via.placeholder.com/300x200?text=Bruschetta",
-                    price: 7.99,
-                    translations: [
-                      { 
-                        languageCode: "en", 
-                        fieldName: "name", 
-                        translatedText: "Bruschetta" 
-                      },
-                      { 
-                        languageCode: "en", 
-                        fieldName: "description", 
-                        translatedText: "Toasted bread topped with tomatoes, garlic, and fresh basil" 
-                      },
-                    ],
-                    discount: {
-                      type: "PRODUCT_LEVEL",
-                      percentage: 10,
-                      startDate: "2023-01-01",
-                      endDate: "2023-12-31"
-                    }
-                  },
-                ]
+                translations: [
+                  { languageCode: "en", fieldName: "name", translatedText: "Margherita Pizza" },
+                  { languageCode: "en", fieldName: "description", translatedText: "Classic tomato and mozzarella" }
+                ],
               }
-            ]
+            ],
+            discount: {
+              type: "CATEGORY_LEVEL",
+              percentage: 20,
+              startDate: "2025-06-26",
+              endDate: "2025-07-20"
+            }
           }
-        ]
+        ],
+        discount: {
+          type: "CATEGORY_LEVEL",
+          percentage: 10,
+          startDate: "2025-06-26",
+          endDate: "2025-07-20"
+        }
       }
     ]
   }
@@ -655,7 +287,7 @@ function NotFound({ subdomain }: { subdomain: string }) {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <h1 className="text-4xl font-bold text-red-600 mb-4">Restaurant Not Found</h1>
       <p className="text-xl text-gray-700 mb-8">
-        The restaurant with subdomain <strong>{subdomain}</strong> doesn't exist or is not active.
+        The restaurant with subdomain <strong>{subdomain}</strong> does not exist or is not active.
       </p>
       <a 
         href="https://menumaya.local" 
@@ -668,9 +300,12 @@ function NotFound({ subdomain }: { subdomain: string }) {
 }
 
 export default function RestaurantPage({ params }: { params: { subdomain: string } }) {
-  const [showMenu, setShowMenu] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState(localStorage.getItem('selectedLanguage') || 'en');
+  const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') || 'ETB');
+
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(localStorage.getItem('selectedCategory') ? parseInt(localStorage.getItem('selectedCategory')!) : null);
+  
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>(localStorage.getItem('viewMode') as 'grid' | 'list' || 'list');
 
   const getTranslation = (translations: Translation[], fieldName: string): string => {
     const translation = translations.find(
@@ -679,126 +314,102 @@ export default function RestaurantPage({ params }: { params: { subdomain: string
     return translation?.translatedText || translations[0]?.translatedText || '';
   };
 
+  const getPrice = (exchanges: Exchange[]): number => {
+    const exchange = exchanges.find(e => e.symbol === selectedCurrency);
+    return exchange ? exchange.price : 0;
+  };
+
+  const getSymbol = (exchanges: Exchange[]): string => {
+    const exchange = exchanges.find(e => e.symbol === selectedCurrency);
+    return exchange ? exchange.symbol : '';
+  };
+
   if (!mockRestaurant.active) {
     return <NotFound subdomain={params.subdomain} />;
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{
-      '--primary': mockRestaurant.primaryColor,
-      '--secondary': mockRestaurant.secondaryColor,
-      '--accent': mockRestaurant.accentColor
-    } as React.CSSProperties}>
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        '--primary': "#4F46E5",
+        '--secondary': "#1E293B",
+        '--accent': "#F59E0B"
+      } as React.CSSProperties}
+    >
       {/* Small Header (when menu is shown) */}
-      {showMenu ? (
-        <header className="bg-[var(--secondary)] py-3 px-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
-          <div className="flex items-center">
-            <img 
-              src={mockRestaurant.logoUrl} 
-              alt={mockRestaurant.name} 
-              className="h-10 object-contain mr-3"
-            />
-            <h1 className="text-lg font-semibold text-white">
-              {mockRestaurant.name}
-            </h1>
-          </div>
-          <LanguageSwitcher 
-            languages={mockRestaurant.menu.supportedLanguages}
-            selectedLanguage={selectedLanguage}
-            onSelect={setSelectedLanguage}
+      <header className="bg-[var(--secondary)] py-0 px-3 flex justify-between items-center sticky top-0 z-50 shadow-md">
+        <div className="flex items-center">
+          <img 
+            src={mockRestaurant.logoUrl} 
+            alt={mockRestaurant.name} 
+            className="h-13 object-contain mr-3 rounded-full"
           />
-        </header>
-      ) : (
-        <header className="h-screen flex flex-col items-center justify-center pb-20 relative"
-          style={{ backgroundColor: 'var(--secondary)' }}>
-          <div className="absolute top-4 right-4 z-10">
-            <LanguageSwitcher 
+          <h1 className="text-lg font-semibold text-white">
+            {mockRestaurant.name}
+          </h1>
+        </div>
+
+        <div className="bg-[var(--accent)] rounded">
+          {/* View Toggle */}
+          <div className="flex gap-1 bg-[var(--accent)] p-1 rounded">
+            <button
+              className={`p-1 rounded ${viewMode === 'list' ? 'bg-white text-[var(--primary)]' : 'text-white'}`}
+              onClick={() =>{ setViewMode('list')
+                localStorage.setItem('viewMode', 'list');
+              }}
+              title="List View"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+              </svg>
+            </button>
+            <button
+              className={`p-1 rounded ${viewMode === 'grid' ? 'bg-white text-[var(--primary)]' : 'text-black'}`}
+              onClick={() => {setViewMode('grid')
+                localStorage.setItem('viewMode', 'grid');
+              }}
+              title="Grid View"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z" />
+              </svg>
+            </button>
+          </div>
+          <div className="flex items-center gap-0"> 
+            {/* Language Icon Dropdown */}
+            <LanguageSwitcher
               languages={mockRestaurant.menu.supportedLanguages}
               selectedLanguage={selectedLanguage}
               onSelect={setSelectedLanguage}
             />
-          </div>
 
-          <div className="text-center px-4">
-            <img 
-              src={mockRestaurant.logoUrl} 
-              alt={mockRestaurant.name} 
-              className="h-32 w-auto mb-8 object-contain mx-auto"
+            {/* Currency Icon Dropdown */}
+            <CurrencyExchange
+              Currencies={mockRestaurant.menu.supportedCurrencies}
+              selectedCurrency={selectedCurrency}
+              onSelect={setSelectedCurrency}
             />
-            <h1 className="text-5xl font-bold text-white mb-4">
-              {mockRestaurant.name}
-            </h1>
-            {mockRestaurant.description && (
-              <p className="text-xl text-white opacity-90 max-w-2xl mx-auto mb-12">
-                {mockRestaurant.description}
-              </p>
-            )}
-            <button
-              onClick={() => setShowMenu(true)}
-              className="px-8 py-4 bg-[var(--accent)] text-white font-bold rounded-full 
-                       hover:scale-105 transition-transform shadow-lg animate-bounce"
-            >
-              View Our Menu
-            </button>
-          </div>
-        </header>
-      )}
-
-      {/* Menu Content */}
-      {showMenu && (
-        <main className="flex-1 bg-white">
-          <MenuCategories 
-            categories={mockRestaurant.menu.baseCategories}
-            language={selectedLanguage}
-            getTranslation={getTranslation}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-          />
-        </main>
-      )}
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-            {mockRestaurant.contacts?.phoneNumner && (
-              <p>Phone: {mockRestaurant.contacts.phoneNumner}</p>
-            )}
-            {mockRestaurant.contacts?.emale && (
-              <p>Email: {mockRestaurant.contacts.emale}</p>
-            )}
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-bold mb-4">Social Media</h3>
-            <div className="flex gap-4">
-              {mockRestaurant.contacts?.facebookpageUrl && (
-                <a href={mockRestaurant.contacts.facebookpageUrl} target="_blank" rel="noopener noreferrer">
-                  Facebook
-                </a>
-              )}
-              {mockRestaurant.contacts?.instgram && (
-                <a href={mockRestaurant.contacts.instgram} target="_blank" rel="noopener noreferrer">
-                  Instagram
-                </a>
-              )}
-            </div>
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-bold mb-4">Powered By</h3>
-            <a 
-              href="https://menumaya.local" 
-              className="text-[var(--accent)] hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              MenuMaya
-            </a>
           </div>
         </div>
-      </footer>
+      </header>
+
+      {/* Menu Content */}
+      <main className="flex-1 bg-white">
+        <MenuCategories 
+          viewMode={viewMode}
+          categories={mockRestaurant.menu.baseCategories}
+          language={selectedLanguage}
+          getTranslation={getTranslation}
+          getPrice={getPrice}
+          getSymbol={getSymbol}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+        />
+      </main>
+
+      {/* Footer */}
+      <Footer contacts={mockRestaurant.contacts!}/>
     </div>
   );
 }

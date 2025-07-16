@@ -4,29 +4,66 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+/* Hide scrollbar for all elements */
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-@theme inline {
+/* Geist CSS Variables */
+:root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
-
+/* Dark Mode Support */
+/* This will apply dark mode styles based on the user's system preference */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
-
+/* Global Styles */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Animation Scroll */
+.marquee-wrapper {
+  width: 5.5rem; /* Adjust as needed */
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+
+  /* Fade on both left and right sides */
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: scroll-left 7s linear infinite;
+}
+
+.marquee-track span {
+  padding-right: 5.5rem;
+}
+/* Animation for scrolling text */
+/* This will create a smooth scrolling effect for the text */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
