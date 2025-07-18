@@ -21,10 +21,6 @@ const mockRestaurant: Restaurant = {
   contacts: {
     phoneNumber: "+1234567890",
     email: "info@deliciousbites.com",
-    location: {
-      label: "Addis Ababa, Ethiopia",
-      link: "https://maps.app.goo.gl/jnpY3mccFqkHVfZT6"
-    },
     website: "https://deliciousbites.com",
     facebook: "https://facebook.com/deliciousbites",
     instagram: "https://instagram.com/deliciousbites",
@@ -52,7 +48,7 @@ const mockRestaurant: Restaurant = {
     baseCategories: [
       {
         id: 1001, // Categories in 1000s
-        imageUrl: "https://via.placeholder.com/400x200?text=Appetizers",
+        icon: "https://via.placeholder.com/400x200?text=Appetizers",
         translations: [
           { languageCode: "en", fieldName: "name", translatedText: "Appetizers" },
           { languageCode: "ar", fieldName: "name", translatedText: "المقبلات" },
@@ -62,7 +58,7 @@ const mockRestaurant: Restaurant = {
         children: [
           {
             id: 2001, // Subcategories in 2000s
-            imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
+            icon: "https://via.placeholder.com/400x200?text=Special+Appetizers",
             translations: [
               { languageCode: "en", fieldName: "name", translatedText: "Special Appetizers" }
             ],
@@ -70,8 +66,7 @@ const mockRestaurant: Restaurant = {
               {
                 id: 3001, // Foods in 3000s
                 imageUrl: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-                price: 7.99,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -87,13 +82,13 @@ const mockRestaurant: Restaurant = {
                   percentage: 10,
                   startDate: "2025-01-01",
                   endDate: "2025-07-07"
-                }
+                },
+                finished: false
               },
               {
                 id: 3002,
                 imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0EbtAMkvjstpwiT8oSwwiPDJXVpC_KAaHdw&s",
-                price: 7.99,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -107,13 +102,13 @@ const mockRestaurant: Restaurant = {
                   percentage: 10,
                   startDate: "2025-08-01",
                   endDate: "2025-12-31"
-                }
+                },
+                finished: false
               },
               {
                 id: 3004,
                 imageUrl: "",
-                price: 7.99,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -127,13 +122,14 @@ const mockRestaurant: Restaurant = {
                   percentage: 10,
                   startDate: "2025-08-01",
                   endDate: "2025-12-31"
-                }
+                },
+                finished: false
               }
             ]
           },
           {
             id: 2002,
-            imageUrl: "https://via.placeholder.com/400x200?text=Special+Appetizers",
+            icon: "https://via.placeholder.com/400x200?text=Special+Appetizers",
             translations: [
               { languageCode: "en", fieldName: "name", translatedText: "Seasonal Appetizers" }
             ],
@@ -141,8 +137,7 @@ const mockRestaurant: Restaurant = {
               {
                 id: 3003,
                 imageUrl: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-                price: 7,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -156,7 +151,8 @@ const mockRestaurant: Restaurant = {
                   percentage: 10,
                   startDate: "2023-01-01",
                   endDate: "2023-12-31"
-                }
+                },
+                finished: false
               }
             ]
           }
@@ -164,7 +160,7 @@ const mockRestaurant: Restaurant = {
       },
       {
         id: 1002,
-        imageUrl: "https://via.placeholder.com/400x200?text=Fast+Food",
+        icon: "https://via.placeholder.com/400x200?text=Fast+Food",
         translations: [
           { languageCode: "en", fieldName: "name", translatedText: "Fast Food" },
           { languageCode: "ar", fieldName: "name", translatedText: "الوجبات السريعة" },
@@ -174,7 +170,7 @@ const mockRestaurant: Restaurant = {
         children: [
           {
             id: 2003,
-            imageUrl: "https://via.placeholder.com/400x200?text=Burgers",
+            icon: "https://via.placeholder.com/400x200?text=Burgers",
             translations: [
               { languageCode: "en", fieldName: "name", translatedText: "Burgers" }
             ],
@@ -182,8 +178,7 @@ const mockRestaurant: Restaurant = {
               {
                 id: 3010,
                 imageUrl: "https://thumbs.dreamstime.com/b/bargar-food-looks-like-you-re-asking-could-clarify-what-mean-referring-to-bargarh-district-india-burger-366711135.jpg?w=992",
-                price: 9.99,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -197,13 +192,14 @@ const mockRestaurant: Restaurant = {
                   percentage: 10,
                   startDate: "2023-01-01",
                   endDate: "2023-12-31"
-                }
+                },
+                finished: false
               }
             ]
           },
           {
             id: 2004,
-            imageUrl: "https://via.placeholder.com/400x200?text=Pizzas",
+            icon: "https://via.placeholder.com/400x200?text=Pizzas",
             translations: [
               { languageCode: "en", fieldName: "name", translatedText: "Pizzas" }
             ],
@@ -211,8 +207,7 @@ const mockRestaurant: Restaurant = {
               {
                 id: 3005,
                 imageUrl: "https://c.ndtvimg.com/2021-01/78btgdc_pizza_625x300_15_January_21.jpg",
-                price: 12.99,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -226,13 +221,13 @@ const mockRestaurant: Restaurant = {
                   percentage: 15,
                   startDate: "2025-06-01",
                   endDate: "2025-12-31"
-                }
+                },
+                finished: false
               },
               {
                 id: 3006,
                 imageUrl: "https://c.ndtvimg.com/2021-01/78btgdc_pizza_625x300_15_January_21.jpg",
-                price: 12.99,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -246,13 +241,13 @@ const mockRestaurant: Restaurant = {
                   percentage: 15,
                   startDate: "2025-06-01",
                   endDate: "2025-12-31"
-                }
+                },
+                finished: false
               },
               {
                 id: 3007,
                 imageUrl: "https://c.ndtvimg.com/2021-01/78btgdc_pizza_625x300_15_January_21.jpg",
-                price: 12.99,
-                exchanges: [ 
+                exchanges: [
                   { symbol: "ETB", price: 400 },
                   { symbol: "USD", price: 8.00 },
                   { symbol: "EUR", price: 7.00 }
@@ -261,6 +256,7 @@ const mockRestaurant: Restaurant = {
                   { languageCode: "en", fieldName: "name", translatedText: "Margherita Pizza" },
                   { languageCode: "en", fieldName: "description", translatedText: "Classic tomato and mozzarella" }
                 ],
+                finished: false
               }
             ],
             discount: {

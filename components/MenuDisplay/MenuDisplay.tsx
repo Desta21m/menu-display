@@ -46,9 +46,9 @@ function FoodCard({ food, language }: { food: Food; language: string }) {
         <p className="text-gray-600 text-sm mt-1">
           {getTranslation(food.translations, language, 'description')}
         </p>
-        <div className="mt-2 font-bold">
+        {/* <div className="mt-2 font-bold">
           {food.price} ETB
-        </div>
+        </div> */}
       </div>
     </div>
   );

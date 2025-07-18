@@ -17,10 +17,6 @@ export interface Contact {
   id?: number;
   phoneNumber?: string;
   email?: string;
-  location?: {
-    label: string;
-    link: string;
-  };
   facebook?: string;
   instagram?: string;
   youtube?: string;
@@ -60,14 +56,14 @@ export type Category = {
   foods: Food[];
   children?: Category[];
   discount?: Discount;
-  imageUrl: string;
+  icon: string;
 };
 
 export type Food = {
   id: number;
   translations: Translation[];
-  price: number; // TO DO: need to delete this field
   exchanges?: Exchange[];
+  finished: boolean;
   imageUrl: string;
   discount?: Discount;
 };

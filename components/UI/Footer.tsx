@@ -46,7 +46,7 @@ export default function Footer({ contacts }: { contacts: Contact }) {
                                 </a>
                             </li>
                         )}
-                        {contacts.location && (
+                        {/* {contacts.location && (
                             <li className="flex items-center gap-2">
                                 <FaLocationDot size={18} className="text-gray-400" />
                                 <a
@@ -58,7 +58,7 @@ export default function Footer({ contacts }: { contacts: Contact }) {
                                     {contacts.location.label}
                                 </a>
                             </li>
-                        )}
+                        )} */}
                         {contacts.website && (
                             <li className="flex items-center gap-2">
                                 <FaGlobe size={18} className="text-gray-400" />
